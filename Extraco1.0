@@ -1,0 +1,1315 @@
+def show_BeautifulSoup_functions_info():
+    # BeautifulSoup Menu, please choose which chapter you would like to run, some capabilities might not work depending
+    # On the compatibility and origin of the website that you used from HTML code.
+    functions = {
+        "1": "parse(): Parse an HTML or XML document.",
+        "2": "prettify(): Make the document more readable",
+        "3": "find(): Find the matching element.",
+        "4": "find_all(): Find all matching elements.",
+        "5": "select(): CSS selector to find elements.",
+        "6": "find_parent(): Find the parent element.",
+        "7": "find_next_sibling(): Find the next sibling element.",
+        "8": "find_previous_sibling(): Find the previous sibling element.",
+        "9": "get_text(): Extract text from an element.",
+        "10": "find_next(): Find the next element.",
+        "11": "find_previous(): Find the previous element.",
+        "12": "descendants: Iterate through all descendants.",
+        "13": "parents: Iterate through all ancestors.",
+        "14": "previous_element: Find the previous element.",
+        "15": "next_element: Find the next element.",
+        "16": "has_attr(): Check if an element has a specific attribute.",
+        "17": "get(): Get the value of an attribute.",
+        "18": "string: Access the string inside an element.",
+        "19": "decompose(): Remove an element from the tree.",
+        "20": "encode_contents(): Encode the contents of an element.",
+        "21": "insert_before(): Insert content before an element.",
+        "22": "insert_after(): Insert content after an element.",
+        "23": "clear(): Remove all children from an element.",
+        "24": "replace_with(): Replace an element with new content.",
+        "25": "wrap(): Wrap an element with new content unwrap(): / Remove an element's tag but keep its content ",
+        "26": "NavigableString: Access and manipulate text nodes.",
+        "27": "Comment: Create Comment Object/ Access and manipulate comments.",
+        "28": "SoupStrainer: Parse only parts of the document.",
+        "29": "Using MS Access to a Database (Windows Compatible)",
+        "30": "Full Webscrape",
+        '31': "Retrieving scraped data and inputting it into a text file",
+        '32': "Database Retrieval (Windows Compatible)"
+
+    }
+    print("Beautiful Soup Functions:")
+    for key, value in functions.items():
+        print(f"{key}. {value}")
+
+
+#-----------------------------------------------------------------------------------------------------------------------
+
+
+show_BeautifulSoup_functions_info()
+def beautiful_soup_menu(choice):
+    # Chooses which option you would like to click on between 1-38
+    # using an if/elif/else statement for menu options, user gets to input the website URL. https:// required
+
+#-----------------------------------------------------------------------------------------------------------------------
+
+    # e.g (https://uspto.gov) (https://nyit.edu/academics) (https://nyit.edu/campuslife)
+    # Be specific about the URL choice, only works on HTML description, not compatible with number format and organization as of yet
+
+    # Option parses and HTML or XML document, enter the website URL to parse and copy tags, enter any tag
+    # That might be desirable, e.g ('a', anchor tag)('p' paragraph tag)('h1' header tag) Be specific, especially
+    # When it tasks for the link.get.
+    # (The href is an attribute to the anchor tag)
+    if choice == '1':
+        print("You have chose option 1, Parse an HTML or XML document")
+        from bs4 import BeautifulSoup
+        import requests
+        # import requests from bs4 BeautifulSoup, import requests to get URL information
+        print("You have chose option 1, parse(): Parse an HTML or XML document")
+        url = input("Enter the website URL: ")
+        # User enters the desired website URL (https://uspto.gov)
+        response = requests.get(url)
+        if response.status_code == 200:
+            # Status code 200 represents successful HTML response
+            # Using BeautifulSoup code, lxml is a python BeautifulSoup library
+            soup = BeautifulSoup(response.text, 'lxml')
+            links = soup.find_all('a')
+            # 'a' represents anchor, finds anchor tag by using specifying href
+            for link in links:
+                print(link.get('href'))
+
+
+#-----------------------------------------------------------------------------------------------------------------------
+
+    elif choice == '2':
+        print("You have chosen option 2, prettify(): Make the document more readable")
+        import requests
+        from bs4 import BeautifulSoup
+        # Always make sure to import requests for requests and BeautifulSoup if the user decides to enter a website URL
+
+        url = input("Enter the website URL: ")
+        response = requests.get(url)
+        if response.status_code == 200:
+            # Status code 200, successful HTML response from website, copies HTML code in following code after
+            soup = BeautifulSoup(response.text, 'lxml')
+            pretty_html = soup.prettify()
+            print(pretty_html)
+
+            # print out entirely of HTML code directly from the website onto the output code
+            # As an example, try the website (https://uspto.gov) or (https://nyit.edu/academics)
+            # Here is an output example after https://uspto.gov is printed
+            # ---------------------------------------------------------------------------------------------------
+            # e.g (Below is an example)
+            # <!DOCTYPE html>
+            # <html dir="ltr" lang="en" prefix="og: https://ogp.me/ns#">
+            # <head>
+            # <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+            # <meta charset="utf-8"/>
+            # <meta content="Home page of the United States Patent and Trademark Office's main web site." name="description"/>
+            # <link href="https://www.uspto.gov/" rel="shortlink"/>
+            # <link href="https://www.uspto.gov/" rel="canonical"/>
+            # <meta content="United States Patent and Trademark Office" name="dcterms.title"/>
+            # <meta content="USPTO Office of Public Affairs (OPA)" name="dcterms.creator"/>
+
+        else:
+            print("Failed to retrieve the web page")
+
+
+
+    # -----------------------------------------------------------------------------------------------------------------------
+
+    # Using find(): from the BeautifulSoup functions, this option finds the first matching element
+    elif choice == '3':
+        # For headers specifically, to find H1 tags, just change the name inside the parentheses for header object
+        print("You have chose option 3, find(): Find the first matching element")
+        import requests
+        from bs4 import BeautifulSoup
+        # Always make sure to import necessary imports required for the task, since BS is a webscraper
+        # Necessary imports all require from bs4 import BeautifulSoup
+        # import requests are necessary to ensure a successful 200 status code each time a user enters a website
+
+        url = input("Enter the URL: ")
+        response = requests.get(url)
+        if response.status_code == 200:
+            # 200 Successful status code
+            soup = BeautifulSoup(response.text, 'lxml')
+            # Uses the BeautifulSoup library
+            header = soup.find('header')
+            # Similar to option 1 where the user now can choose the header,
+            if header:
+                print(header.get_text())
+            else:
+                print("Header not found on the page.")
+
+            # If header is not found, uses an else statement
+            # Example Output Below
+            # As an example use (https://uspto.gov)
+            # Output is Jump to main contentUSPTO - United States Patent and Trademark OfficeSearchFind it Fast LinksMenu Search:
+
+# -----------------------------------------------------------------------------------------------------------------------
+
+
+    # Option 4 is similar to option 3 however uses both find() and findall() matching elements
+    elif choice == '4':
+        # For <a> anchor tags specifically, you can change to any other tag format in HTML (e.g. Div, H1, p)
+        print("You have chose option 4, find_all(): Find all matching elements")
+        import requests
+        from bs4 import BeautifulSoup
+        url = input("Enter the URL: ")
+        response = requests.get(url)
+        if response.status_code == 200:
+            soup = BeautifulSoup(response.text, 'lxml')
+            # To specify, anchor tags are used to create hyperlinks within a webpage,
+            # Uses the attribute href, and prints out the href links from anchor tag,
+            # Remember that cod within objects an link.get statemenets can always be changed to either a p tag, h1 tag or an header tag
+            # Always make sure to get the attribute that corresponds with your tag.
+            # <a> tags are associated with href/target attributes
+            # <p> tags use global attributes like 'id' and 'class'
+            # <img> tags 'src' or 'alt'
+            links = soup.find_all('a')
+            if links:
+                for link in links:
+                    href = link.get('href')
+                    if href:
+                        print("Link:", href)
+
+# -----------------------------------------------------------------------------------------------------------------------
+
+
+    # Select(); uses the Cascading Style Sheets selector to find all elements
+    elif choice == '5':
+        print("You have chose option 5, select(): CSS selector to find elements")
+        import requests
+        from bs4 import BeautifulSoup
+        # Always use necessary imports and user can input their desired website URL input
+        # Remember that BeautifulSoup is a webscraping tool, it does not have functionalities to copy and paste numbers or graphs onto a Python output (PyCharm)
+        # Using databases such as MySQL or MS Access, this may be possible; however, not compatible with IOS MAC
+        # MS Access available in Windows, this will be further discussed in option 37
+        url = input("Enter the URL: ")  # Get user input for the website URL
+        try:
+            response = requests.get(url)
+            if response.status_code == 200:
+                # Status code 200: successful response from website URL
+                soup = BeautifulSoup(response.text, 'lxml')  #
+                links = soup.select('a.some-class')
+                # Find anchor tags with class 'some-class'
+                if links:  # If links with specified class are found
+                    for link in links:
+                        href = link.get('href')  # Get the href attribute of the link
+                        text = link.get_text()  # Get the text of the link
+                        print(f"Link Text: {text}, Href: {href}")
+                        # Print link text and href
+                else:
+                    print("No links found with the specified class.")
+                    # If no links are found within specified class, it prints out this
+        except requests.RequestException as e:
+            print(f"Request Failed: {e}")
+            # if request fails, prints out failed request from website/ error occurred.
+
+# -----------------------------------------------------------------------------------------------------------------------
+
+    elif choice == '6':
+        print("You have chose option 6, find_parent(): Find the parent element.")
+        from bs4 import BeautifulSoup
+        html_markup = '''
+        <html>
+        <head>
+            <title>Sample Article Page</title>
+        </head>
+        <body>
+            <div class="articles">
+                <h2 class="article-title">Chapter 1: Introduction to BeautifulSoup</h2>
+                <h2 class="article-title">Chapter 2: How is BeautifulSoup used in programming?</h2>
+                <h2 class="article-title">Chapter 3: BeautifulSoup Menu</h2>
+            </div>
+        </body>
+        </html>
+        '''
+        soup = BeautifulSoup(html_markup, 'html.parser')
+        target_element = soup.find('h2', text='Chapter 3: BeautifulSoup Menu')
+        if target_element:
+            parent_element = target_element.find_parent()
+            if parent_element:
+                print("Parent Element:")
+                print(parent_element.prettify())
+            else:
+                print("Parent element not found.")
+
+
+
+# -----------------------------------------------------------------------------------------------------------------------
+
+
+    # Option 7 finds the next sibling element in HTML code
+    elif choice == '7':
+        print("You have chose option 7, find_next_sibling(): Find the next sibling element")
+        import requests
+        from bs4 import BeautifulSoup
+        # Always make necessary imports, remember all BeautifulSoup requests involve requests and from bs4 import BeautifulSoup
+        url = input("Enter the website URL: ")
+        try:
+            response = requests.get(url)
+            if response.status_code == 200:
+                soup = BeautifulSoup(response.text, 'lxml')
+               # Use the object soup by using the BeautifulSoup library to find the next sibling in a class
+                # Tries to find the div class with 'your-class-name'
+                target_element = soup.find('div', class_='your-class-name')
+                if target_element:
+                    next_sibling = target_element.find_next_sibling()
+                    # Checks the element of the website the user has inputted
+                    # Assuming target_element is found,
+                    # line attempts to find its next sibling element in the HTML structure.
+                    # BeautifulSoup's find_next_sibling() function searches for and returns the next sibling of the supplied element.
+                    if next_sibling:
+                        print("Next Sibling:", next_sibling)
+                    else:
+                        print("No next sibling found for the target element.")
+                        # Prints out whether sibling is found or not for the target element
+                    # Q & A: What are target elements?
+                    # A : Refers to an element in HTML code that has been identified by BeautifulSoup's method
+            else:
+                print("Webpage status code error ", response.status_code)
+        except requests.RequestException as e:
+            print(f"Request Failed: {e}")
+
+
+# -----------------------------------------------------------------------------------------------------------------------
+
+
+    # Option 8 now finds the previous sibling element
+    # When using these options, please be mindful that not all websites will work
+    # If certain websites do not work, It may be because of an error within the status code from the website
+    # Or the website may just not be webscraped/ Graphs
+    elif choice == '8':
+        print("You have chose option 8, find_previous_sibling(): Find the previous sibling element.")
+        import requests
+        from bs4 import BeautifulSoup
+        # import all necessary imports needed
+        url = input("Enter a URL: ")
+        try:
+            response = requests.get(url)
+            response.raise_for_status()
+            # Status code 200 successful
+            soup = BeautifulSoup(response.text, 'lxml')
+            # Creates object Soup and uses the text from input by using BS library
+            target_element = soup.find('your-selector')
+            # Uses find method which matches that given selector (e.g, tag name, ID, Class)
+            if target_element:
+                previous_sibling = target_element.find_previous_sibling()
+                if previous_sibling:
+                    print("Previous Sibling:", previous_sibling)
+                else:
+                    print("No previous sibling found for the specified element.")
+            else:
+                print("Target element not found.")
+        except requests.exceptions.RequestException as e:
+            print(f"An error occurred: {e}")
+            # PLEASE BE MINDFUL THAT PREVIOUS ELEMENT IS JUST A METHOD USED TO FIND TAG ELEMENT OF THE GIVEN ELEMENT
+            # THIS PARTICULAR OPTION MAY NOT WORK FOR A VARIETY OF WEBSITES AS IT IS NOT REALLY NECESSARY
+            # THIS OPTION IS JUST A USE OF REFERENCE FOR THE BEAUTIFULSOUP METHODS AND FUNCTIONALITIES
+
+# -----------------------------------------------------------------------------------------------------------------------
+
+
+    # Option 9 gets the text from an element
+    elif choice == '9':
+        print("You have chose option 9, get_text(): Extract text from an element.")
+        import requests
+        from bs4 import BeautifulSoup
+        url = input("Enter the website URL: ")
+        # Enter the desired website URL
+        try:
+            response = requests.get(url)
+            response.raise_for_status()
+            response.status_code = 200
+            soup = BeautifulSoup(response.text, 'html.parser')
+            title_element = soup.find('title')
+            # Instead of using the object soup, it uses soup.find method to find the title of the entered URL
+            # lxml (BeautifulSoup library) is not used as HTML Parser (reads and interprets HTML code)
+            if title_element:
+                extracted_text = title_element.get_text()
+                print("Title of website:")
+                # REMEMBER THAT THE STRING WITHIN soup.find() can always be changed to a different HTML TAG, KEEP THIS IN MIND
+                # THIS ALSO INCLUDES FOR ALL THE BEAUTIFULSOUP FUNCTIONS LISTED ABOVE THAT CAN BE CHANGED TO ANY HTML TAG WITHIN RANGE AS LONG AS YOUR WEBSITE URL IS FORMATTED AND CORRECT
+                print(extracted_text)
+            else:
+                print("Title element not found on the page.")
+        except requests.exceptions.RequestException as e:
+            print(f"Error: {e}")
+            # ERROR PRINTED IF TITLE ELEMENT IS NOT FOUND WITHIN THE PAGE
+            # REMEMBER THAT MOST WEBSITE HAVE TITLE PAGES, IF A TITLE PAGE IS NOT FOUND, THE WEBSITE MAY NOT BE CORRECTLY DISPLAYED WHEN ENTERED
+
+# -----------------------------------------------------------------------------------------------------------------------
+
+
+    # Option 10 finds the next element in an HTML code
+    elif choice == '10':
+        print("You have chose option 10, find_next(): Find the next element.")
+        import requests
+        from bs4 import BeautifulSoup
+        url = input("Enter the website URL: ")
+        try:
+            response = requests.get(url)
+            response.raise_for_status()
+            soup = BeautifulSoup(response.text, 'html.parser')
+            title_element = soup.find('title')
+            # PRINTS OUT THE NEXT ELEMENT AFTER TITLE
+            # BE MINDFUL THAT MANY BEAUTIFULSOUP OPTIONS WILL NOT WORK
+            if title_element:
+                next_element = title_element.find_next()
+
+                if next_element:
+                    extracted_text = next_element.get_text()
+                    print("Next Element Text:")
+                    print(extracted_text)
+                else:
+                    print("No next element found after the title.")
+            else:
+                print("Title element not found on the page.")
+        except requests.exceptions.RequestException as e:
+            print(f"An error occurred: {e}")
+            # THIS OPTION IS ALSO USED AS AN EXAMPLE, AS IT IS NOT NECESSARY OR PROVIDES VALUE WITH THE EXCEPTION OF MOVING FOWARD IN ONE STRING,
+            # DEPENDING ON WHAT THE USER WANTS, THE USER CAN ENTER H1, or HEADER TAG's
+            # IN THIS EXAMPLE, TITLE WAS USED, BY USING THE HTML PARSER
+
+# -----------------------------------------------------------------------------------------------------------------------
+
+
+    # Finds the previous element in HTML code
+    elif choice == '11':
+        print("You have chose option 11, find_previous(): Find the previous element.")
+        import requests
+        from bs4 import BeautifulSoup
+        url = input("Enter the website URL: ")
+        while True:
+            try:
+                response = requests.get(url)
+                response.raise_for_status()
+                soup = BeautifulSoup(response.text, 'html.parser')
+                selector = input(
+                    "Enter a selector for the target element (e.g., 'h1', 'p', '#my-id', '.my-class'), or 'q' to quit: ")
+                # The user can choose a bunch of these selectors for the target element
+                if selector.lower() == 'q':
+                    print("Exiting.....")
+                    # Uses break if user chooses q to quit
+                    break
+
+                target_element = soup.select_one(selector)
+                if target_element:
+                    previous_element = target_element.find_previous()
+                    if previous_element:
+                        extracted_text = previous_element.get_text()
+                        print("Previous Element Text: ")
+                        print(extracted_text)
+                        # Uses select one to find a single element in the website.
+                        # Selector uses Cascading Style Sheets selector that is entered by the user
+                        # Prints out the previous extracted text element, similar to find previous sibling, instead more specified in finding the selectors
+                        # Extracts the text content from previous_element
+                    else:
+                        print("No previous element found before the target element.")
+            except requests.exceptions.RequestException as e:
+                print(f"An error occurred: {e}")
+                # BE MINDFUL THAT MANY BEAUTIFULSOUP FUNCTIONS ARE SIMILAR BUT SPECIFY DIFFERENT CODE
+                # AS LIMITLESS OPTIONS TO WHAT THE USER CHOOSES OR WANTS TO SELECT
+                # PROGRAMMER HAS CHOICE TO CHOOSE WHICH TAG OR ELEMENTS TO INSERT INTO THE STRING
+
+# -----------------------------------------------------------------------------------------------------------------------
+
+
+    # Option 12 iterates through descendants, quite similar to option 10
+    # This option iterates through all descendants in the HTML code, infinite elements in any website
+    elif choice == '12':
+        print("You have chose option 12, descendants: Iterate through all descendants ")
+        from bs4 import BeautifulSoup
+        import requests
+        def iterate_descendants(target_element):
+            for descendant in target_element.descendants:
+                if descendant.name:
+                    print(f"Tag: {descendant.name}")
+                elif descendant.string.strip():  # Check if string exists and is not just whitespace
+                    print(f"String: {descendant.string.strip()}")
+        # Uses WhileTrue statement to make a sub menu section so the user can select an option to choose either a (body, div, my-d, my-class)
+        while True:
+            try:
+                url = input("Enter the website URL: ")
+                if url.lower() == 'exit':
+                    print("Exiting...................")
+                    break
+                    # The user can choose to enter the website URL and given a break if they choose to exit the program
+                response = requests.get(url)
+                response.raise_for_status()
+                response.Status_code = 200
+                # Using the website URL, gets status 200 successful.
+                soup = BeautifulSoup(response.content, 'html.parser')
+                # Uses the object soup, similar to other options up top, HTML Parser instead of lxml library
+                selector = input("Enter a selector (e.g., 'body', 'div', '#my-id', '.my-class'), or 'q' to quit: ")
+                # User selects a selector attribute tag
+                if selector.lower() == 'q':
+                    print("Exiting.......")
+                    break
+
+                target_element = soup.select_one(selector)
+                if target_element:
+                    print("Iterating through all descendants of the target element:")
+                    iterate_descendants(target_element)
+                    # Uses the target element and finds one selector based off the website URL, uses HTML code and goes through the list and gathers all data from what is selected.
+                else:
+                    print("Target element not found on the page.")
+                    # As similar code to the top code, if the target element is not found, either shows an error, or website input may be incorrect, or website does not have attribute that can be shown in output to print values of descendants
+            except requests.exceptions.RequestException as e:
+                print(f"Error: {e}")
+
+# -----------------------------------------------------------------------------------------------------------------------
+
+
+    #Option 13 parents iterates through all ancestors, similar to descendants in option 11
+    elif choice == '13':
+        print("You have chose option 13, parents: Iterate through all ancestors.")
+        import requests
+        from bs4 import BeautifulSoup
+        # import necessary imports,
+        url = input("Enter the website URL: ")
+        # allow the user to input the desired URL
+        response = requests.get(url)
+        response.raise_for_status()
+        soup = BeautifulSoup(response.text, 'html.parser')
+        # Similar to the ones before, soup.find uses div tags, tags must correspond with the attribute and correct format. Can also use h1 or header if necessary. Can change code for better accuracy
+        element = soup.find('div')
+        # uses <div> tag
+        for parent in element.parents:
+            print("Parent Tag:", parent.name)
+            # This code tries to use soup.find to find the parent name as it navigates through the HTML code of any website
+        response.close()
+
+# -----------------------------------------------------------------------------------------------------------------------
+
+
+    # Option 14 finds previous element
+    # Points to element was parsed immediately before the given tag/element.
+    elif choice == '14':
+        print("You have chose option 14, previous_element: Find the previous element.")
+        import requests
+        from bs4 import BeautifulSoup
+        # import the necessary imports
+        url = input("Enter the website URL: ")
+        response = requests.get(url)
+        response.raise_for_status()
+        soup = BeautifulSoup(response.text, 'html.parser')
+        element = soup.find('div')
+        previous_element = element.find_previous()
+        # Find previous_element finds the div class element that was parsed before
+        # soup.find() finds the <div> class
+        if previous_element:
+            print("Previous Element:")
+            print(previous_element)
+        else:
+            print("No previous element found before the selected element.")
+        response.close()
+
+        # As an example, I will be using https://uspto.gov, the example will be shown below
+        # <a class="visually-hidden focusable skip-link" href="#main-content"> Skip to main content </a>
+
+
+        # Another example, I will be using https://nyit.edu/academics, here is the output, please be mindful of the links that you input to the program
+        # <header class="site-header spacing-zero layout-full" role="banner">
+        # <div class="column">
+        # <a class="logo" data-grunticon-embed="" href="/" title="NYIT">
+        # <svg data-name="Layer 1" id="Layer_1" viewbox="0 0 250.92 91.91" xmlns="http://www.w3.org/2000/svg"><defs><style>.cls-1{fill:#002d72;}.cls-2{fill:#f2a900;}</style></defs><title>Logo_NYIT_2019</title><path class="cls-1" d="M888.63,375.77v22.31h-3.74l-5.41-14.73h-.09l.22,5v9.74h-3.52V375.77h3.74l5.4,14.68h.1l-.22-5.5v-9.18Z" transform="translate(-876.04 -338.55)"></path><path class="cls-1" d="M897.37,379v6.12h6v3.21h-6v6.63h6.68v3.17h-10.6V375.77h10.47V379Z" transform="translate(-876.04 -338.55)"></path><path class="cls-1" d="M927,375.77l-3.26,22.31h-4.94L917.13,386l-.32-1.94h-.06l-.28,1.94-1.7,12.1h-4.93l-3.3-22.31h3.93l2.07,16.5h.06l2.23-16.5h3.93l2.26,16.5h.07l2-16.5Z" transform="translate(-876.04 -338.55)"></path><path class="cls-1" d="M941.37,391.11l-5-15.34h4.09l2.86,10.34h.09l2.89-10.34h4.09l-5.06,15.34v7h-3.93Z" transform="translate(-876.04 -338.55)"></path><path class="cls-1" d="M952.67,394.47V379.39a3.65,3.65,0,0,1,3.77-3.77h4.78a3.65,3.65,0,0,1,3.8,3.77v15.08a3.65,3.65,0,0,1-3.8,3.77h-4.78A3.65,3.65,0,0,1,952.67,394.47Zm7.32.6a1,1,0,0,0,1.1-1.1V379.89a1,1,0,0,0-1.1-1.1h-2.32a1,1,0,0,0-1.07,1.1V394a1,1,0,0,0,1.07,1.1Z" transform="translate(-876.04 -338.55)"></path><path class="cls-1" d="M981.75,390.63v7.45h-3.93v-8.14a1,1,0,0,0-1.07-1.06h-3.39v9.2h-3.93V375.77h8.45a3.68,3.68,0,0,1,3.81,3.77l0,4.37a3.52,3.52,0,0,1-2.36,3.46A3.08,3.08,0,0,1,981.75,390.63ZM973.36,379v6.75h3.33a1,1,0,0,0,1.1-1.07V380a1,1,0,0,0-1.1-1.06Z" transform="translate(-876.04 -338.55)"></path><path class="cls-1" d="M995,398.08l-4.84-10.49v10.49h-3.93V375.77h3.93V386L995,375.77h4.24l-5.47,11,5.53,11.34Z" transform="translate(-876.04 -338.55)"></path><path class="cls-1" d="M1009.76,375.77h3.93v22.31h-3.93Z" transform="translate(-876.04 -338.55)"></path><path class="cls-1" d="M1031.09,375.77v22.31h-3.74l-5.4-14.73h-.1l.22,5v9.74h-3.52V375.77h3.74l5.41,14.68h.09l-.22-5.5v-9.18Z" transform="translate(-876.04 -338.55)"></path><path class="cls-1" d="M1035.46,394.47v-4h3.93V394a1,1,0,0,0,1,1.1h2.36a1,1,0,0,0,1.07-1.1v-3.74a1.08,1.08,0,0,0-.79-1.17l-5-1.38c-1.67-.44-2.61-2-2.61-4v-4.27a3.65,3.65,0,0,1,3.77-3.77H1044a3.63,3.63,0,0,1,3.77,3.77v4h-3.93v-3.49a1,1,0,0,0-1.07-1.1h-2.36a1,1,0,0,0-1,1.1v3.46a1,1,0,0,0,.88,1.16l4.49,1.26c2.2.53,3,1.85,3,4.21v4.49a3.63,3.63,0,0,1-3.77,3.77h-4.78A3.65,3.65,0,0,1,1035.46,394.47Z" transform="translate(-876.04 -338.55)"></path><path class="cls-1" d="M1062.05,379H1058v19.13h-3.93V379h-4v-3.18h12Z" transform="translate(-876.04 -338.55)"></path><path class="cls-1" d="M1064.84,375.77h3.93v22.31h-3.93Z" transform="translate(-876.04 -338.55)"></path><path class="cls-1" d="M1083.59,379h-4.07v19.13h-3.93V379h-4v-3.18h12Z" transform="translate(-876.04 -338.55)"></path><path class="cls-1" d="M1086.39,394.47v-18.7h3.93V394a1,1,0,0,0,1.07,1.07h2.33a1,1,0,0,0,1.06-1.07V375.77h3.93v18.7a3.63,3.63,0,0,1-3.77,3.77h-4.78A3.65,3.65,0,0,1,1086.39,394.47Z" transform="translate(-876.04 -338.55)"></path><path class="cls-1" d="M1113.54,379h-4.08v19.13h-3.92V379h-4v-3.18h12Z" transform="translate(-876.04 -338.55)"></path><path class="cls-1" d="M1120.32,379v6.12h6v3.21h-6v6.63H1127v3.17h-10.57V375.77h10.54V379Z" transform="translate(-876.04 -338.55)"></path><path class="cls-1" d="M876,426.63v-15a3.5,3.5,0,0,1,3.8-3.8h2.94a3.51,3.51,0,0,1,3.83,3.8v15a3.51,3.51,0,0,1-3.83,3.8h-2.94A3.5,3.5,0,0,1,876,426.63Zm6.14,1.88a1.85,1.85,0,0,0,2.11-2.13V411.86a1.86,1.86,0,0,0-2.11-2.14h-1.74c-1.41,0-2.07.7-2.07,2.14v14.52c0,1.44.66,2.13,2.07,2.13Z" transform="translate(-876.04 -338.55)"></path><path class="cls-1" d="M892.7,409.91v8.14h6.13V420H892.7v10.3h-2.33V408h8.91v1.92Z" transform="translate(-876.04 -338.55)"></path><path class="cls-1" d="M920.11,411.17H916V430.3H912.1V411.17H908V408h12.07Z" transform="translate(-876.04 -338.55)"></path><path class="cls-1" d="M927,411.17v6.12h6v3.21h-6v6.63h6.57v3.17H923.05V408h10.49v3.18Z" transform="translate(-876.04 -338.55)"></path><path class="cls-1" d="M937.43,426.69V411.61a3.65,3.65,0,0,1,3.77-3.77H946a3.65,3.65,0,0,1,3.8,3.77v4.58h-3.92v-4.08a1,1,0,0,0-1.11-1.1h-2.32a1,1,0,0,0-1.07,1.1v14.08a1,1,0,0,0,1.07,1.1h2.32a1,1,0,0,0,1.11-1.1V421.5h3.92v5.19a3.65,3.65,0,0,1-3.8,3.77H941.2A3.65,3.65,0,0,1,937.43,426.69Z" transform="translate(-876.04 -338.55)"></path><path class="cls-1" d="M966.73,408V430.3h-3.92V421h-4.44v9.27h-3.92V408h3.92v9.84h4.44V408Z" transform="translate(-876.04 -338.55)"></path><path class="cls-1" d="M984.57,408V430.3h-3.74l-5.41-14.73h-.09l.22,5v9.74H972V408h3.74l5.4,14.68h.1l-.22-5.5V408Z" transform="translate(-876.04 -338.55)"></path><path class="cls-1" d="M989.44,426.69V411.61a3.65,3.65,0,0,1,3.77-3.77H998a3.65,3.65,0,0,1,3.8,3.77v15.08a3.65,3.65,0,0,1-3.8,3.77h-4.77A3.65,3.65,0,0,1,989.44,426.69Zm7.32.6a1,1,0,0,0,1.1-1.1V412.11a1,1,0,0,0-1.1-1.1h-2.33a1,1,0,0,0-1.07,1.1v14.08a1,1,0,0,0,1.07,1.1Z" transform="translate(-876.04 -338.55)"></path><path class="cls-1" d="M1016.14,427.13v3.17h-9.59V408h3.93v19.14Z" transform="translate(-876.04 -338.55)"></path><path class="cls-1" d="M1018.67,426.69V411.61a3.65,3.65,0,0,1,3.77-3.77h4.78a3.65,3.65,0,0,1,3.8,3.77v15.08a3.65,3.65,0,0,1-3.8,3.77h-4.78A3.65,3.65,0,0,1,1018.67,426.69Zm7.32.6a1,1,0,0,0,1.1-1.1V412.11a1,1,0,0,0-1.1-1.1h-2.32a1,1,0,0,0-1.07,1.1v14.08a1,1,0,0,0,1.07,1.1Z" transform="translate(-876.04 -338.55)"></path><path class="cls-1" d="M1043.6,415.41v-3.3a1,1,0,0,0-1.1-1.1h-2.32a1,1,0,0,0-1.07,1.1v14.08a1,1,0,0,0,1.07,1.1h2.48a1,1,0,0,0,1.07-1.1v-4.84H1041v-3.18h6.5V430.3h-2l-.41-1.63a2.71,2.71,0,0,1-2.89,1.79H1039a3.65,3.65,0,0,1-3.77-3.77V411.61a3.65,3.65,0,0,1,3.77-3.77h4.78a3.65,3.65,0,0,1,3.8,3.77v3.8Z" transform="translate(-876.04 -338.55)"></path><path class="cls-1" d="M1054.91,423.33l-5-15.34H1054l2.86,10.34h.09l2.89-10.34h4.09l-5.06,15.34v7h-3.93Z" transform="translate(-876.04 -338.55)"></path><path class="cls-1" d="M888.63,375.77v22.31h-3.74l-5.41-14.73h-.09l.22,5v9.74h-3.52V375.77h3.74l5.4,14.68h.1l-.22-5.5v-9.18Z" transform="translate(-876.04 -338.55)"></path><path class="cls-1" d="M897.37,379v6.12h6v3.21h-6v6.63h6.68v3.17h-10.6V375.77h10.47V379Z" transform="translate(-876.04 -338.55)"></path><path class="cls-1" d="M927,375.77l-3.26,22.31h-4.94L917.13,386l-.32-1.94h-.06l-.28,1.94-1.7,12.1h-4.93l-3.3-22.31h3.93l2.07,16.5h.06l2.23-16.5h3.93l2.26,16.5h.07l2-16.5Z" transform="translate(-876.04 -338.55)"></path><path class="cls-1" d="M941.37,391.11l-5-15.34h4.09l2.86,10.34h.09l2.89-10.34h4.09l-5.06,15.34v7h-3.93Z" transform="translate(-876.04 -338.55)"></path><path class="cls-1" d="M952.67,394.47V379.39a3.65,3.65,0,0,1,3.77-3.77h4.78a3.65,3.65,0,0,1,3.8,3.77v15.08a3.65,3.65,0,0,1-3.8,3.77h-4.78A3.65,3.65,0,0,1,952.67,394.47Zm7.32.6a1,1,0,0,0,1.1-1.1V379.89a1,1,0,0,0-1.1-1.1h-2.32a1,1,0,0,0-1.07,1.1V394a1,1,0,0,0,1.07,1.1Z" transform="translate(-876.04 -338.55)"></path><path class="cls-1" d="M981.75,390.63v7.45h-3.93v-8.14a1,1,0,0,0-1.07-1.06h-3.39v9.2h-3.93V375.77h8.45a3.68,3.68,0,0,1,3.81,3.77l0,4.37a3.52,3.52,0,0,1-2.36,3.46A3.08,3.08,0,0,1,981.75,390.63ZM973.36,379v6.75h3.33a1,1,0,0,0,1.1-1.07V380a1,1,0,0,0-1.1-1.06Z" transform="translate(-876.04 -338.55)"></path><path class="cls-1" d="M995,398.08l-4.84-10.49v10.49h-3.93V375.77h3.93V386L995,375.77h4.24l-5.47,11,5.53,11.34Z" transform="translate(-876.04 -338.55)"></path><path class="cls-1" d="M1009.76,375.77h3.93v22.31h-3.93Z" transform="translate(-876.04 -338.55)"></path><path class="cls-1" d="M1031.09,375.77v22.31h-3.74l-5.4-14.73h-.1l.22,5v9.74h-3.52V375.77h3.74l5.41,14.68h.09l-.22-5.5v-9.18Z" transform="translate(-876.04 -338.55)"></path><path class="cls-1" d="M1035.46,394.47v-4h3.93V394a1,1,0,0,0,1,1.1h2.36a1,1,0,0,0,1.07-1.1v-3.74a1.08,1.08,0,0,0-.79-1.17l-5-1.38c-1.67-.44-2.61-2-2.61-4v-4.27a3.65,3.65,0,0,1,3.77-3.77H1044a3.63,3.63,0,0,1,3.77,3.77v4h-3.93v-3.49a1,1,0,0,0-1.07-1.1h-2.36a1,1,0,0,0-1,1.1v3.46a1,1,0,0,0,.88,1.16l4.49,1.26c2.2.53,3,1.85,3,4.21v4.49a3.63,3.63,0,0,1-3.77,3.77h-4.78A3.65,3.65,0,0,1,1035.46,394.47Z" transform="translate(-876.04 -338.55)"></path><path class="cls-1" d="M1062.05,379H1058v19.13h-3.93V379h-4v-3.18h12Z" transform="translate(-876.04 -338.55)"></path><path class="cls-1" d="M1064.84,375.77h3.93v22.31h-3.93Z" transform="translate(-876.04 -338.55)"></path><path class="cls-1" d="M1083.59,379h-4.07v19.13h-3.93V379h-4v-3.18h12Z" transform="translate(-876.04 -338.55)"></path><path class="cls-1" d="M1086.39,394.47v-18.7h3.93V394a1,1,0,0,0,1.07,1.07h2.33a1,1,0,0,0,1.06-1.07V375.77h3.93v18.7a3.63,3.63,0,0,1-3.77,3.77h-4.78A3.65,3.65,0,0,1,1086.39,394.47Z" transform="translate(-876.04 -338.55)"></path><path class="cls-1" d="M1113.54,379h-4.08v19.13h-3.92V379h-4v-3.18h12Z" transform="translate(-876.04 -338.55)"></path><path class="cls-1" d="M1120.32,379v6.12h6v3.21h-6v6.63H1127v3.17h-10.57V375.77h10.54V379Z" transform="translate(-876.04 -338.55)"></path><path class="cls-1" d="M876,426.63v-15a3.5,3.5,0,0,1,3.8-3.8h2.94a3.51,3.51,0,0,1,3.83,3.8v15a3.51,3.51,0,0,1-3.83,3.8h-2.94A3.5,3.5,0,0,1,876,426.63Zm6.14,1.88a1.85,1.85,0,0,0,2.11-2.13V411.86a1.86,1.86,0,0,0-2.11-2.14h-1.74c-1.41,0-2.07.7-2.07,2.14v14.52c0,1.44.66,2.13,2.07,2.13Z" transform="translate(-876.04 -338.55)"></path><path class="cls-1" d="M892.7,409.91v8.14h6.13V420H892.7v10.3h-2.33V408h8.91v1.92Z" transform="translate(-876.04 -338.55)"></path><path class="cls-1" d="M920.11,411.17H916V430.3H912.1V411.17H908V408h12.07Z" transform="translate(-876.04 -338.55)"></path><path class="cls-1" d="M927,411.17v6.12h6v3.21h-6v6.63h6.57v3.17H923.05V408h10.49v3.18Z" transform="translate(-876.04 -338.55)"></path><path class="cls-1" d="M937.43,426.69V411.61a3.65,3.65,0,0,1,3.77-3.77H946a3.65,3.65,0,0,1,3.8,3.77v4.58h-3.92v-4.08a1,1,0,0,0-1.11-1.1h-2.32a1,1,0,0,0-1.07,1.1v14.08a1,1,0,0,0,1.07,1.1h2.32a1,1,0,0,0,1.11-1.1V421.5h3.92v5.19a3.65,3.65,0,0,1-3.8,3.77H941.2A3.65,3.65,0,0,1,937.43,426.69Z" transform="translate(-876.04 -338.55)"></path><path class="cls-1" d="M966.73,408V430.3h-3.92V421h-4.44v9.27h-3.92V408h3.92v9.84h4.44V408Z" transform="translate(-876.04 -338.55)"></path><path class="cls-1" d="M984.57,408V430.3h-3.74l-5.41-14.73h-.09l.22,5v9.74H972V408h3.74l5.4,14.68h.1l-.22-5.5V408Z" transform="translate(-876.04 -338.55)"></path><path class="cls-1" d="M989.44,426.69V411.61a3.65,3.65,0,0,1,3.77-3.77H998a3.65,3.65,0,0,1,3.8,3.77v15.08a3.65,3.65,0,0,1-3.8,3.77h-4.77A3.65,3.65,0,0,1,989.44,426.69Zm7.32.6a1,1,0,0,0,1.1-1.1V412.11a1,1,0,0,0-1.1-1.1h-2.33a1,1,0,0,0-1.07,1.1v14.08a1,1,0,0,0,1.07,1.1Z" transform="translate(-876.04 -338.55)"></path><path class="cls-1" d="M1016.14,427.13v3.17h-9.59V408h3.93v19.14Z" transform="translate(-876.04 -338.55)"></path><path class="cls-1" d="M1018.67,426.69V411.61a3.65,3.65,0,0,1,3.77-3.77h4.78a3.65,3.65,0,0,1,3.8,3.77v15.08a3.65,3.65,0,0,1-3.8,3.77h-4.78A3.65,3.65,0,0,1,1018.67,426.69Zm7.32.6a1,1,0,0,0,1.1-1.1V412.11a1,1,0,0,0-1.1-1.1h-2.32a1,1,0,0,0-1.07,1.1v14.08a1,1,0,0,0,1.07,1.1Z" transform="translate(-876.04 -338.55)"></path><path class="cls-1" d="M1043.6,415.41v-3.3a1,1,0,0,0-1.1-1.1h-2.32a1,1,0,0,0-1.07,1.1v14.08a1,1,0,0,0,1.07,1.1h2.48a1,1,0,0,0,1.07-1.1v-4.84H1041v-3.18h6.5V430.3h-2l-.41-1.63a2.71,2.71,0,0,1-2.89,1.79H1039a3.65,3.65,0,0,1-3.77-3.77V411.61a3.65,3.65,0,0,1,3.77-3.77h4.78a3.65,3.65,0,0,1,3.8,3.77v3.8Z" transform="translate(-876.04 -338.55)"></path><path class="cls-1" d="M1054.91,423.33l-5-15.34H1054l2.86,10.34h.09l2.89-10.34h4.09l-5.06,15.34v7h-3.93Z" transform="translate(-876.04 -338.55)"></path><rect class="cls-2" height="19.87" width="250.8" x="0.05"></rect></svg>
+        # </a>
+        # <nav class="nav" role="navigation">
+        # <ul class="nav-utility q-large-show">
+
+#-----------------------------------------------------------------------------------------------------------------------
+
+
+    # Next_Element is the opposite of Previous_Element and points to the element parsed after the given element/tag
+    elif choice == '15':
+        print("You have chose option 15, next_element: Find the next element")
+        import requests
+        from bs4 import BeautifulSoup
+        def find_next_element(url, current_element):
+            response = requests.get(url)
+            soup = BeautifulSoup(response.text, 'html.parser')
+            # Remember that using the object soup, not all will be required to use lxml BeautifulSoup library
+            curr_tag = soup.find(current_element)
+            if curr_tag:
+                next_tag = curr_tag.find_next()
+                if next_tag:
+                    return next_tag
+                # Return the next tag/element and print to the output using the URL specified
+                #
+            else:
+                return None
+        url = input("Enter the website URL: ")
+        # Get the current element from the user (e.g., 'div', 'p', body, my-id, my-class etc.)
+        cur_element = input("Enter the current HTML element selector (e.g., 'div', 'p', 'body', 'div', '#my-id', '.my-class') ")
+        next_element = find_next_element(url, cur_element)
+        # Next element uses the website URL to find the element from the website and scrapes and prints to output
+        # If HTML element selector does not function and gives errors, this means that the website is trying to find that specific tag
+        # Be very specific when it comes to specific functionalities of BeautifulSoup
+        if next_element:
+            print("Next element found:", next_element)
+        else:
+            print("No next element found.")
+
+
+# -----------------------------------------------------------------------------------------------------------------------
+
+
+    # Option 16 checks if the element has a specific attribute
+    # As discussed in other menu options above, attributes like href, and src are example of attribute names
+    # The HTML tags are the same way, <a> anchor tags, <img> image tags, <h1> header tags
+    elif choice == '16':
+        print("You have chose option 16, has_attr(): Check if an element has a specific attribute.")
+        import requests
+        from bs4 import BeautifulSoup
+
+        def check_attribute_presence(url, tag_name, attribute_name):
+            response = requests.get(url)
+            soup = BeautifulSoup(response.text, 'html.parser')
+
+            element = soup.find(tag_name)
+
+            if element:
+                if element.has_attr(attribute_name):
+                    return True
+                else:
+                    return False
+            else:
+                return False
+        website_url = input("Enter the website URL: ")
+
+
+        # Get the HTML tag from the user (e.g., 'a', 'img', etc.)
+        tag_name = input("Enter the HTML tag name: ")
+
+        # Get the HTML Attributes from the user (e.g., 'a', 'img', etc.)
+        # All examples of HTML Attribute you can select from
+        #   "id",
+        # "class"
+        #  "style"
+        #  "href"
+        # "src"
+        # "alt"
+        # "title"
+        # "width"
+        # "height"
+        # "name"
+        # "value"
+        # "placeholder"
+        # "type"
+        # "action"
+        # "method"
+        # "onclick"
+        #  "onchange"
+        #  "onmouseover"
+        #  "onmouseout"
+        # "disabled"
+        # "selected"
+        # "checked"
+        # "readonly"
+        #  "multiple"
+        #  "autocomplete"
+        #  "target"
+        # "rel"
+        # "for"
+        #  "min"
+        # "max"
+        # "step"
+        #  "enctype"
+        # "required"
+        # "pattern"
+        #  "download"
+        # "autofocus"
+        #  "form"
+        # "size"
+        # "rows"
+        # "cols"
+        # "colspan"
+        # "rowspan")
+
+        # Get the attribute name from the user (e.g., 'href', 'src', etc.)
+        attribute_name = input("Enter the attribute name: ")
+
+        # All example of HTML Tags from the user
+        # "<html>",
+        # "<head>",
+        # "<title>",
+        # "<body>",
+        # "<h1>",
+        # "<h2>",
+        # "<h3>",
+        # "<h4>",
+        # "<h5>",
+        # "<h6>",
+        # "<p>",
+        # "<a>",
+        # "<img>",
+        # "<ul>",
+        # "<ol>",
+        # "<li>",
+        # "<table>",
+        # "<tr>",
+        # "<td>",
+        # "<th>",
+        # "<div>",
+        # "<span>",
+        # "<form>",
+        # "<input>",
+        # "<textarea>",
+        # "<button>",
+        # "<select>",
+        # "<option>",
+        # "<label>",
+        # "<br>",
+        # "<hr>",
+        # "<!-- -->",
+        # "<style>",
+        # "<script>",
+        # "<meta>",
+        # "<link>",
+        # "<nav>",
+        # "<header>",
+        # "<footer>",
+        # "<section>",
+        # "<article>",
+        # "<aside>",
+        # "<main>",
+        # "<figure>",
+        # "<figcaption>",
+        # "<audio>",
+        # "<video>",
+        # "<source>",
+        # "<canvas>",
+        # "<svg>"
+
+
+        # Check if the attribute is present
+        attribute_present = check_attribute_presence(website_url, tag_name, attribute_name)
+
+        if attribute_present:
+            print(f"The '{tag_name}' tag has the '{attribute_name}' attribute on the provided website.")
+        else:
+            print(f"The '{tag_name}' tag does not have the '{attribute_name}' attribute on the provided website.")
+            # REMEMBER THAT YOU MUST HAVE BASIC HTML KNOWLEDGE OF TAGS AND ATTRIBUTES
+            # If the tag does not have the attribute name along with the tag name, it will not show up, this only says if the tag and attribute was found based off the website the user has inputted
+            # To give an example for you, I will be using https://uspto.gov, here is the output down below
+            # "The 'a' tag has the 'href' attribute on the provided website". (This is the output you will get after inputting the correct tag with the attribute)
+
+
+# -----------------------------------------------------------------------------------------------------------------------
+
+
+    # Option 17 gets the value of the attribute that is selected, please use the example above to find desired attribute
+    elif choice == '17':
+        print("You have chose option 17, get(): Get the value of an attribute.")
+        import requests
+        from bs4 import BeautifulSoup
+
+        def get_attribute_value(url, tag, attribute):
+            response = requests.get(url)
+            if response.status_code == 200:
+                soup = BeautifulSoup(response.text, 'html.parser')
+
+                tag_element = soup.find(tag)
+                if tag_element:
+                    attribute_value = tag_element.get(attribute)
+                    if attribute_value:
+                        return attribute_value
+                    else:
+                        return f"No '{attribute}' attribute found for the '{tag}' tag."
+                else:
+                    return f"No '{attribute}' attribute found on the webpage."
+            else:
+                    return f"No '{tag}' tag found on the webpage."
+        url = input("Enter the website URL: ")
+        tag = input("Enter the HTML tag you want to search for: ")
+        attribute = input("Enter the attribute name you want to retrieve: ")
+        result = get_attribute_value(url, tag, attribute)
+        print(result)
+        # To find the value of an attribute means to change the "color, size, or functionality of HTML elements".
+        # As an example, I will be using the website https://uspto.gov, as it asks me for the HTML tag, I will choose a, for the attribute, I will choose href. The output will be shown down below
+        # #main-content
+
+
+# -----------------------------------------------------------------------------------------------------------------------
+
+
+    # Option 18 allows you to access the string inside of an element
+    # For this specific option, I have used HTML code from online and made my own example using HTML code
+    # In this code, it specifically shows the structure of HTML, head, title, body, along with div and h2 classes
+    elif choice == '18':
+        print("You have chose option 18, String: Access the string inside an element.")
+        from bs4 import BeautifulSoup
+        html_markup = '''
+        <html>
+        <head><title>Sample Article Page</title></head>
+        <body>
+            <div class="articles">
+                <h2 class="article-title"> Chapter 1: Introduction to BeautifulSoup </h2>
+                <h2 class="article-title"> Chapter 2: How is BeautifulSoup used in programming? </h2>
+                <h2 class="article-title"> Chapter 3: BeautifulSoup Menu </h2>
+            </div>
+        </body>
+        </html>
+        '''
+        # This output only gets the h2 tags speicifically with the article title name next to the tag in which prints out
+        # Programmer can change any way they would like to get desired results
+        soup = BeautifulSoup(html_markup, 'html.parser')
+        article_titles = soup.find_all('h2', class_='article-title')
+        for title in article_titles:
+            print(title.get_text())
+
+
+# -----------------------------------------------------------------------------------------------------------------------
+
+
+    # Similar to option 18, where HTML markup is given to show exactly how the decomposition is done
+    elif choice == '19':
+        print("You have chosen option 19, decompose(): Remove an element from the tree.")
+        from bs4 import BeautifulSoup
+        html_markup = '''
+        <html>
+        <head><title>Sample Article Page</title></head>
+        <body>
+            <div class="articles">
+                <h2 class="article-title"> Chapter 1: Introduction to BeautifulSoup </h2>
+                <h2 class="article-title"> Chapter 2: How is BeautifulSoup used in programming? </h2>
+                <h2 class="article-title"> Chapter 3: BeautifulSoup Menu </h2>
+            </div>
+        </body>
+        </html>
+        '''
+        # Used same html markup as option 17
+        soup = BeautifulSoup(html_markup, 'html.parser')
+        first_h2 = soup.find('h2', class_='article-title')
+        first_h2.decompose()
+        print(soup.prettify())
+        # During the output, decompose() removes the first h2 tag which is Chapter 1: Introduction to BeautifulSoup
+        # This can be used for websites, however, errors and complications may happen due to an overflow with HTML code without specification of the tag being used.
+        # Meaning that you may have to find each tag, class and attribute that you want to remove manually
+
+
+# -----------------------------------------------------------------------------------------------------------------------
+
+
+    elif choice == '20':
+        print("You have chosen option 20, encode_contents(): Encode the contents of an element.")
+        import requests
+        from bs4 import BeautifulSoup
+
+        print("Choose an option:")
+        print("1. Enter the website URL")
+        print("2. Show HTML Markup")
+
+        choice = input("Enter your choice (1 or 2): ")
+
+        if choice == '1':
+            url = input("Enter the website URL: ")
+            response = requests.get(url)
+            if response.status_code == 200:
+                soup = BeautifulSoup(response.content, 'html.parser')
+                paragraph = soup.find('a')
+                if paragraph:
+                    encoded_contents = paragraph.encode_contents()
+                    print("Encoded Content of <a> tag:")
+                    print(encoded_contents)
+
+        elif choice == '2':
+            html_markup = '<p>This is <Beau>tiful</Soup> and <em>Bold</em> text.</p>'
+            soup = BeautifulSoup(html_markup, 'html.parser')
+            paragraph = soup.find('p')
+            encoded_contents = paragraph.encode_contents()
+            print("Encoded Content:")
+            print(encoded_contents)
+
+
+# -----------------------------------------------------------------------------------------------------------------------
+
+
+    # Option 21 allows a user to insert anything they want before an element, this example would not work particularly on a website
+    # Therefore, the user inputting a website URL would just not be possible, unless specified with extreme detail
+    # Here is an example of HTML markup, where I have used HTML structured code to format my options
+    # You can switch the HTML code to whatever you may like
+    # BE MINDFUL THAT NOT ALL BEAUTIFULSOUP FUNCTIONS WOULD WORK FROM WEBSITE HTML CODE
+    elif choice == '21':
+        print("You have chose option 21, insert_before(): Insert content before an element")
+        import requests
+        from bs4 import BeautifulSoup
+        html_markup = '''
+            <!DOCTYPE html>
+            <html>
+            <head>
+        <title>Insert Before Example</title>
+        </head>
+        <body>
+         <div id="target">This is the target element HEYYYYY.</div>
+        </body>
+        </html>
+        '''
+        soup = BeautifulSoup(html_markup, 'html.parser')
+        target_element = soup.find(id='target')
+        if target_element:
+            new_element = soup.new_tag('p')
+            new_element.string = 'Hello, how are you, this content is inserted before the desired element.'
+            target_element.insert_before(new_element)
+        print(soup.prettify())
+        # Makes the document more readable, Look back at option 2 to understand its capability and functionality
+
+
+# -----------------------------------------------------------------------------------------------------------------------
+
+    # Option 22 insert_after inserts an element after the element that was chosen
+    # Asking for the user to input a website URL would not be suited as, the whole HTML code of that website may print out
+    # Difficult for organization, especially entering into databases
+    elif choice == '22':
+        print("You have chose option 22, insert_after(): Insert content after an element.")
+        from bs4 import BeautifulSoup
+        # import all necessary imports
+        import requests
+        # Using the HTML content from the last example, now we insert content after the chosen element
+        html_content = '''
+        <html>
+        <head>
+            <title>Sample Page</title>
+        </head>
+        <body>
+            <div id="main">
+                <p>Hello, this is a sample paragraph.</p>
+                <span>This is another element.</span>
+            </div>
+        </body>
+        </html>
+        '''
+        soup = BeautifulSoup(html_content, 'html.parser')
+        target_element = soup.find('p')
+        # By looking at the p tag based off of the HTML markup code, It inserts the text for new_content object
+        new_content = "<p>This is the inserted content, HEYYYYY</p>"
+        target_element.insert_after(new_content)
+        print(soup.prettify())
+        # Makes the document more readable, look back at option 2 for more information
+
+
+# -----------------------------------------------------------------------------------------------------------------------
+
+    #This option removes all children contents from an element, please look at the raw HTML markup code
+    #Like many examples, these particular exameles do not work on actual website that a user may enter
+    #Please use these as examples, but please be sure to understand HTML terminology before making changes to this project
+    elif choice == '23':
+        print("You have chose option 23, clear(): Remove all children from an element")
+        from bs4 import BeautifulSoup
+        import requests
+        html_markup = '''
+        <html>
+        <head>
+            <title>Sample Page</title>
+        </head>
+        <body>
+            <div id="main">
+                <p>Hello, this is a sample paragraph.</p>
+                <span>This is another element.</span>       
+            </div>
+        </body>
+        </html>
+        '''
+        #Using this object for BeautifulSoup, we use the html markup which contains HTML code and by using the HTML
+        #library, we find the div class for the attribute of id=main and clear the contents.
+        soup = BeautifulSoup(html_markup, 'html.parser')
+        main_div = soup.find(id="main")
+        main_div.clear()
+        print(soup.prettify())
+        # This element deletes the children elements that the user or programmer wants to select
+        # Using the id tag main, it deletes the p tag and span element as a filler example
+        # Like many BeautifulSoup options, this would not work on websites, these are used merely as examples
+
+
+#-----------------------------------------------------------------------------------------------------------------------
+
+    # This option replaces an element with new contents, or contents that the user may insert, similar to inserting and encoding
+    elif choice == '24':
+         print("You have chose option 24, replace_with(): Replace an element with new content.")
+         from bs4 import BeautifulSoup
+
+         html_markup = '''
+         <html>
+         <head>
+             <title>Replace With Example</title>
+         </head>
+         <body>
+             <div id="content">
+                 <p>This is the old paragraph content.</p>
+             </div>
+         </body>
+         </html>
+         '''
+
+         soup = BeautifulSoup(html_markup, 'html.parser')
+         # uses the object Soup from the html markup by using the library html parser
+
+         old_paragraph = soup.find('p')
+         # uses the <p> or paragraph tag to find and select
+
+         new_contents = '<p>Hi, how are you, this is the new content to input, by Tejas Avatar, LATER!!!!.</p>'
+         # Specified string for the new contents that have been entered by the programmer
+
+         old_paragraph.replaceWith(BeautifulSoup(new_contents, 'html.parser'))
+         # Uses the replaceWith function with the new contents from the string that the programmer has entered into making a new input
+
+         print(soup.prettify())
+         # Makes the content more readable
+
+# -----------------------------------------------------------------------------------------------------------------------
+
+    #This option allows the user to select between 2 options within number 25
+    #Easier convenience, faster results
+    elif choice == '25':
+        print("You have chose option 25, wrap(): Wrap an element with new content "
+              "Unwrap(): / Remove an element's tag but keep its content")
+        from bs4 import BeautifulSoup
+        # Makes a choice object
+        print("Choose an option:")
+        print("1. Wrap(): Wrap an element with new content")
+        print("2. Unwrap(): Remove an element's tag but keep its content")
+
+        choice = input("Enter your choice (1 or 2): ")
+        # Uses if elif statement so the user can choose wrap or unwrap, for convenience
+        # These are only examples of html code, the user does need to have basic HTML understanding to understand the markup
+
+        if choice == '1':
+            # HTML CONTENT, also labeled in other examples used
+            html_markup = '''
+            <html>
+            <head>
+                <title>Example of Wrap</title>
+            </head>
+            <body>
+                <div id="content">
+                    <p>Heyy, please Wrap this, paragraph needed to be wrapped by programmer,laterrrrrr</p>
+                </div>
+            </body>
+            </html>
+            '''
+            soup = BeautifulSoup(html_markup, 'html.parser')
+            # uses the object BeautifulSoup by using the html markup and html parser library to initialize variable
+
+            paragraph = soup.find('p')
+            # finds the <p> or paragraph tag within the html markup I have created
+
+            new_wrap = soup.new_tag("div")
+            new_wrap.string = "New wrapped content: "
+            # Adds the new wrapped content around the html_markup
+            # Adds a new div tag to the html markup
+
+            paragraph.wrap(new_wrap)
+            # Adds a new wrap in addition to the div tag
+
+            print(soup.prettify())
+            # Makes the document easier to read
+
+
+        elif choice == '2':
+            # HTML Content that was used in previous examples, this is the format in how HTML code would look like
+            html_markup = '''
+            <html>
+            <head>
+                <title>Example of Unwrap</title>
+            </head>
+            <body>
+                <div id="content">
+                    <div>
+                        <p>Waiting to be unwrapped,sir,please unwrap me.</p>
+                    </div>
+                </div>
+            </body>
+            </html>
+            '''
+
+
+            soup = BeautifulSoup(html_markup, 'html.parser')
+            # uses the object soup by using the html markup and the html.parser library
+
+            wrapped_paragraph = soup.find('p')
+            # The wrapped paragraph now use the object to find the p tag using soup.find
+
+            wrapped_paragraph.unwrap()
+            # The wrapped paragraph selected now gets unwrapped using the p tag shown above
+
+            print(soup.prettify())
+            # Makes the document more readable
+
+# -----------------------------------------------------------------------------------------------------------------------
+
+
+    elif choice == '26':
+        print("You have chose option 26, NavigableString: Access and manipulate text nodes.")
+        from bs4 import BeautifulSoup
+        from bs4 import NavigableString
+        # Import all necessary imports, thus being Navigable String which allows us to access the text nodes within HTML
+        html_markup = '''
+        <html>
+        <head>
+            <title>Sample Article Page</title>
+        </head>
+        <body>
+            <div class="articles">
+                <h2 class="article-title">Chapter 1: Introduction to BeautifulSoup</h2>
+                <p>This is where the text may be modified using the p tags.</p>
+            </div>
+        </body>
+        </html>
+        '''
+        # Creates the object soup using the HTML code above. Uses the HTML parser library to identify the p tag
+        soup = BeautifulSoup(html_markup, 'html.parser')
+        paragraph_tag = soup.find('p')
+        # Identifies the p tag and manipulates the text node using the p tags and inserting a string
+        new_text = NavigableString("P tags (Modified Example Using text of HTML code).")
+        # This string shows an example
+        paragraph_tag.string.replace_with(new_text)
+
+        print(soup.prettify())
+        # Makes the code easier to read
+
+
+# -----------------------------------------------------------------------------------------------------------------------
+
+
+
+    # These are examples to use to create comment objects or access and maniuplate them
+    # Using a website URL will not work when it comes to creating comments by webscraping other sites
+    # Down below are examples of how you can create comment objects
+    elif choice == '27':
+        print("You have chose option 27, Comment: Create Comment Object/ Access and manipulate comments.")
+        print("Choose an option")
+        print("1. Create Comment Object")
+        print("2. Access and manipulate comments")
+        from bs4 import BeautifulSoup, Comment
+        import requests
+
+        choice = input("Enter your choice (1 or 2): ")
+        # Creates different choices so the user can choose within the actual option
+
+        if choice == '1':
+            print("You have chosen option 1: Create a comment object using BeautifulSoup.")
+            html_content = '''
+            <html>
+            <head>
+            <title>Sample Page</title>
+            </head>
+            <body>
+            <!-- Whats going on? -->
+            <p>Hey, how are ya, my name is Tejas Avatar, currently working on BeautifulSoup.</p>
+            </body>
+            </html>
+            '''
+            soup = BeautifulSoup(html_content, 'html.parser')
+            # Uses the object soup and making the object html_markup, creates raw HTML code using the html parser
+            comment = Comment("This is a new comment")
+            # Creates the object comment to create a string to create "new comment"
+            soup.head.insert(1, comment)
+            print(soup.prettify())
+            # Makes code more readable
+
+
+        elif choice == '2':
+            print("You have chosen option 2: Access and manipulate comments using BeautifulSoup.")
+            from bs4 import BeautifulSoup, Comment
+            # Import all necessary imports, using the import Comment for the soup object
+
+            # HTML markup code used as an example to aid users to manipulate comments for any HTML code for any website
+            html_markup = """
+            <!DOCTYPE html>
+            <html>
+            <head>
+            <title>Sample Page</title>
+            </head>
+            <body>
+            <!-- This is a sample comment -->
+            <p>Hello, World!</p>
+            <!-- Another comment -->
+            <div>This is a div.</div>
+            </body>
+            </html>
+            """
+            # Creates the object soup and uses the html parser's library to access the html markup and manipulate
+            # the comments, thus the soup uses findall method for the text
+            soup = BeautifulSoup(html_markup, 'html.parser')
+            comments = soup.find_all(string=lambda text: isinstance(text, Comment))
+            #The lambda function checks whether the text is an instance of a BeautifulSoup Comment
+            for comment in comments:
+                print("Comment found:", comment)
+            for comment in comments:
+                comment.extract()
+                # Extract the comments found within the HTML code
+            modified_html = soup.prettify()
+            # Makes the code readable
+            print("\nModified HTML without comments:")
+            print(modified_html)
+            # Output prints out modified HTML code
+
+
+#--------------------------------------------------------------------------------------------------------------------------
+
+
+    elif choice == '28':
+        print("You have chose option 28, SoupStrainer: Parse only parts of the document.")
+        import requests
+        from bs4 import BeautifulSoup, SoupStrainer
+        # import all the necessary imports, now we import Soup Strainer which allows the programmer to specify which items are about to be parsed on HTML
+        url = input("Enter the website URL: ")
+        response = requests.get(url)
+    # User inputs the desired website, status code 200 represents a successful response time
+        if response.status_code == 200:
+            parse_only_p_tags = SoupStrainer('p')
+            # uses the <p> or paragraph tag, you can also replace this with the a tags as well, this depends on what the user wants
+            # I can put many options such as h1, anchor tags, or div tags, however, the user needs to do that to get their desired result from this webscrape
+            soup = BeautifulSoup(response.content, 'html.parser', parse_only=parse_only_p_tags)
+            all_p_tags = soup.find_all('p')
+            if all_p_tags:
+                print("All <p> tags from the provided URL: ")
+                for p_tag in all_p_tags:
+                    print(p_tag)
+            else:
+                print("No <p> tags found on the webpage.")
+                # prints out the <p> tag from the provided URL, most URL's given should have p tags, but specify your website URL
+                # Many errors are caused by the website URL or the status code response
+                # Many website do not like to be scraped, so please be mindful of that
+
+
+# -----------------------------------------------------------------------------------------------------------------------
+
+
+    elif choice == '29':
+        import pyodbc
+        #To get access to a database using pydobc to connect to MS ACCESS, Windows compatible is required, ODBC needs to have accdb file installed into windows 64 bit
+        #Program will not work on an IOS device
+        print("You chose option 29, Using MS Access to a Database (Windows compatible)")
+        #This code is just an example to use, windows compatible only using MS Access. Please enter the file path correctly including the table you want to select
+        conn = pyodbc.connect(r'Driver={Microsoft Access Driver (*mdb, *accdb)} DBQ=C \Users\ETIC Administrator\Documents\BeautifulSoup.accdb')
+        cursor = conn.cursor()
+        cursor.execute ('select * from TEJAS')
+        for row in cursor.fetchall():
+            print(row)
+            # REMINDER, SPECIFICALLY FOR MS DATABASES, YOUR COMPUTER MUST BE WINDOWS COMPATIBLE
+            # PLEASE REARRANGE THE CODE TO MATCH THE FILE PATH OF YOUR MS ACCESS,
+            # Cursor.execute('select * from (Table') (Enter the table name from the new database you have created)
+            # When using pyodbc.connect(
+            # Please ensure that file path matches, just replace (\Users\ETIC Administrator\Documents\BeautifulSoup.accdb) PLEASE REPLACE ACCORDING TO YOUR OWN PATH
+
+
+#-----------------------------------------------------------------------------------------------------------------------
+
+
+    # This option allow for a full webscrape description of a website
+    elif choice == '30':
+        print("You chose option 30, Full Webscrape")
+        import requests
+        from bs4 import BeautifulSoup
+        def getdata(url):
+            r = requests.get(url)
+            return r.text
+        url = input("Enter the URL: ")
+        htmldata = getdata(url)
+        soup = BeautifulSoup(htmldata, 'html.parser')
+        # Find and print text within <p> tags
+        for data in soup.find_all("p"):
+            print(data.get_text())
+            #This option completely scrapes a website using the HTML code found within the HTML data input from the URL the user inputs
+            # The data finds all p tags using the HTML parser by extracting the text from that website onto the final output
+            # As an example try the website https://apple.com/mac/ to get full output
+            # AS A REMINDER, WILL NOT WORK ON CRYPTOCURRENCY WEBSITES
+
+
+#-----------------------------------------------------------------------------------------------------------------------
+
+
+    elif choice == '31':
+        print("You have chose option 31, Retrieving scraped data and inputting it into a text file")
+        import requests
+        from bs4 import BeautifulSoup
+
+        url = input("Enter the URL: ")
+        response = requests.get(url)
+        if response.status_code == 200:
+            soup = BeautifulSoup(response.text, "lxml")
+            links = soup.find_all("a")
+            for link in links:
+                print(link.get("href"))
+
+        # Fetching data from the URL using web scraping
+        scraped_text = ""
+        for data in soup.find_all("a"):
+            scraped_text += data.get_text() + "\n"
+
+        # Write scraped text to a new file
+        file_name = 'scraped_data.txt'
+        with open(file_name, 'w', encoding='utf-8') as file:
+            file.write(scraped_text)
+
+
+#------------------------------------------------------------------------------------------------------------------------
+
+    elif choice == '32':
+        print("You have chose option 32, Database Retrieval (Windows Compatible)")
+        import requests
+        from bs4 import BeautifulSoup
+        import pyodbc
+
+        # Function to establish a connection to the database
+        def connect_to_database():
+            return pyodbc.connect(
+                r'Driver={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=C:\Users\ETIC Administrator\Documents\BeautifulSoup.accdb;')
+
+        # Function to insert a single line of text into the database
+        def insert_scraped_text(text, cursor):
+            insert_query = "INSERT INTO TEJAS (FIELD1) VALUES (?)"
+            cursor.execute(insert_query, (text,))
+            cursor.commit()
+
+        # Input URL and perform web scraping
+        url = input("Enter the URL: ")
+        response = requests.get(url)
+
+        if response.status_code == 200:
+            soup = BeautifulSoup(response.text, "lxml")
+            links = soup.find_all("a")
+
+            # Fetching data from the URL using web scraping
+            scraped_text = ""
+            for data in soup.find_all("a"):
+                scraped_text += data.get_text() + "\n"
+
+            # Write scraped text to a new file
+            file_name = 'scraped_data.txt'
+            with open(file_name, 'w', encoding='utf-8') as file:
+                file.write(scraped_text)
+
+            # Establish a connection to the database
+            conn = connect_to_database()
+            cursor = conn.cursor()
+
+            # Read each line from the text file and insert it into the database
+            with open(file_name, 'r', encoding='utf-8') as file:
+                for line in file:
+                    insert_scraped_text(line.strip(), cursor)
+
+            # Fetch all rows from the table and print them
+            cursor.execute('SELECT * FROM TEJAS')
+            for row in cursor.fetchall():
+                print(row)
+
+            # Close the database connection
+            conn.close()
+
+
+#------------------------------------------------------------------------------------------------------------------------
+
+while True:
+    choice = input("Enter your choice (1-32) or 'quit' to quit: ")
+    if choice == 'quit':
+        break
+    if choice.isdigit():
+        choice = int(choice)
+        if 1 <= choice <= 33:
+            beautiful_soup_menu(str(choice))
+        else:
+            print("Invalid choice. Please enter a number between 1 and 32.")
+    else:
+        print("Invalid choice. Please enter a number between 1 and 32.")
